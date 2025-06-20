@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +21,6 @@ body {
     min-height: 100vh;
 }
 
-/* Header Styles */
 header {
     text-align: center;
     margin-bottom: 40px;
@@ -65,7 +64,6 @@ header {
     font-weight: 300;
 }
 
-/* Main Content */
 main {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 25px;
@@ -74,7 +72,6 @@ main {
     backdrop-filter: blur(10px);
 }
 
-/* Add Task Section */
 .add-task-section {
     padding: 40px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -245,7 +242,6 @@ main {
     transform: none;
 }
 
-/* Tasks Section */
 .tasks-section {
     padding: 40px;
 }
@@ -306,7 +302,6 @@ main {
     gap: 10px;
 }
 
-/* Loading State */
 .loading {
     text-align: center;
     padding: 60px;
@@ -328,7 +323,6 @@ main {
     100% { transform: rotate(360deg); }
 }
 
-/* Empty State */
 .no-tasks {
     text-align: center;
     padding: 80px 20px;
@@ -550,7 +544,6 @@ main {
     background: linear-gradient(135deg, #17a2b8, #138496);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -645,7 +638,6 @@ main {
     }
 }
 
-/* Focus styles for accessibility */
 .form-group input:focus,
 .form-group textarea:focus,
 .btn:focus,
@@ -655,7 +647,6 @@ main {
     outline-offset: 2px;
 }
 
-/* High contrast mode support */
 @media (prefers-contrast: high) {
     .task-item {
         border-width: 3px;
@@ -666,7 +657,6 @@ main {
     }
 }
 
-/* Dark mode support */
 @media (prefers-color-scheme: dark) {
     body {
         background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
