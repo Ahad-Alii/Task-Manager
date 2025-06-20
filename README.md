@@ -40,7 +40,7 @@ Feel free to submit issues and enhancement requests!
 
 ## License
 
-This project is created for educational purposes as part of the Ecell Task-2 assignment.
+This project is created for educational purposes.
 
 ---
 ------------------------------------------------------------------------------------------------------------------------------By-Ahad Ali
