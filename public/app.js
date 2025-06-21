@@ -338,12 +338,25 @@ class TaskManager {
     
     formatDate(date) {
         if (!date) return 'Unknown';
+
+        let taskDate;
+        if (typeof date.toDate === 'function') {
+            taskDate = date.toDate();
+        } else {
+            taskDate = new Date(date);
+        }
+
+        if (isNaN(taskDate.getTime())) {
+            return 'a few moments ago';
+        }
         
         const now = new Date();
-        const taskDate = new Date(date);
-        const diffTime = Math.abs(now - taskDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
+        const diffSeconds = Math.round(Math.abs(now - taskDate) / 1000);
+        const diffDays = Math.ceil(diffSeconds / (60 * 60 * 24));
+
+        if (diffSeconds < 60) {
+            return 'Just now';
+        }
         if (diffDays === 1) {
             return 'Today';
         } else if (diffDays === 2) {
@@ -363,22 +376,46 @@ class TaskManager {
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Automatically sign in anonymously
+    const appContent = document.getElementById('app-content');
+    const signInContainer = document.getElementById('sign-in-container');
+    const userInfo = document.getElementById('user-info');
+    const userName = document.getElementById('user-name');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const googleSignInBtn = document.getElementById('googleSignInBtn');
+
     window.auth.onAuthStateChanged(user => {
         if (user) {
-            document.querySelector('.container').style.display = '';
+            appContent.style.display = 'block';
+            signInContainer.style.display = 'none';
+            userInfo.style.display = 'flex';
+            
+            const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
+            userName.textContent = `Hi, ${firstName}`;
+
             if (!window.taskManager) {
                 window.taskManager = new TaskManager(user);
             } else {
                 window.taskManager.setUser(user);
             }
+        } else {
+            appContent.style.display = 'none';
+            signInContainer.style.display = 'block';
+            userInfo.style.display = 'none';
         }
     });
-    if (!window.auth.currentUser) {
-        window.auth.signInAnonymously().catch(err => {
-            alert('Anonymous sign-in failed: ' + err.message);
-        });
-    }
+
+    googleSignInBtn.addEventListener('click', () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        window.auth.signInWithPopup(provider)
+            .catch((error) => {
+                console.error("Google Sign-In Error:", error);
+                alert(`Sign-in failed: ${error.message}`);
+            });
+    });
+
+    signOutBtn.addEventListener('click', () => {
+        window.auth.signOut();
+    });
 });
 
 // Global error handler
@@ -389,15 +426,3 @@ window.addEventListener('error', (event) => {
     }
 });
 
-// Service Worker registration for offline support (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-} 
