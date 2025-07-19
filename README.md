@@ -3,8 +3,7 @@
 A modern, responsive web application for managing personal tasks with Firebase integration. Built with HTML, CSS, and JavaScript.
 
 
-##LINK
-https://task-manager-766a6.web.app/
+[https://task-manager-766a6.web.app/](https://task-manager-766a6.web.app/)
 
 ## Features
 
